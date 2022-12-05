@@ -6,6 +6,12 @@ Analyzing the causal impacts of wildfire mitigation strategies in California.
 
 <b>Code: </b><br>
 
+1. process downloaded spatial data from different sources into a tabular.
+
+2. apply covariate balance appraoche to obtain control weights to create "synthetic controls".
+
+3. outcome analysis on covariate balanced data to generate results and graphs.
+
 <b>Additional Data Source: </b><br>
 
 
