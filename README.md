@@ -12,7 +12,7 @@ Analyzing the causal impacts of wildfire mitigation strategies in California.
 
 2. [`balancing`](https://github.com/wxwx1993/wildfire_mitigation/tree/main/balancing) apply covariate balance appraoche to obtain control weights to create "synthetic controls".
 
-3. [`analysis`](https://github.com/wxwx1993/wildfire_mitigation/tree/main/analysis) outcome analysis on covariate balanced data to generate results and graphs.
+3. [`analysis`](https://github.com/wxwx1993/wildfire_mitigation/tree/main/analysis) conduct outcome analysis on covariate balanced data to generate results and graphs.
 
 <b>Additional Data Source: </b><br>
 
