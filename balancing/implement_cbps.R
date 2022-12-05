@@ -4,7 +4,6 @@ source("cbps_ATT_regu.R")
 Dir = "../data/processed_data"
 outDir = "../data/intermediate_res"
 
-
 parameters =  expand.grid(c(2008:2020), c("forests", "savannas"))
 
 for (year_area in 1:nrow(parameters)) {
@@ -18,7 +17,7 @@ FIRMS_ca_grouped$unit = paste0(FIRMS_ca_grouped$LATITUDE, FIRMS_ca_grouped$LONGI
 st_geometry(FIRMS_ca_grouped) <- NULL
 low_intensity <- 0.9
 
-fire.df <- subset(FIRMS_ca_grouped, year == treated.year) 
+fire.df <- subset(FIRMS_ca_grouped, year == treated.year 
                   & avg_FRP <= quantile(FIRMS_ca_grouped$avg_FRP, low_intensity))
 fire.df = unique(fire.df[c("unit")])
 

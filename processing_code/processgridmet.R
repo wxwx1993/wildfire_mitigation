@@ -12,14 +12,14 @@ library("fst")
 library(ncdf4) # package for netcdf manipulation
 library(velox)
 
-Dir = "wildfire_mitigation/raw_data/"
-outDir = "wildfire_mitigation/processed_data/"
-resultDir = "wildfire_mitigation/outputs/"
+Dir = "..data/raw_data/"
+outDir = "..data/processed_data/"
+resultDir = "..data/outputs/"
 
 #CA_bound = subset(states(cb = TRUE, resolution = "500k", year = 2020), STATEFP == "06")
 #CA_bound = st_transform(CA_bound, crs = 4326)
 #firms <- readRDS(paste0(outDir, "FIRMS.RDS"))
-gpw_grid_ca <- readRDS(paste0(outDir, "gpw_grid_ca.RDS"))
+gpw_grid_ca <- readRDS(paste0(Dir, "gpw_grid_ca.RDS"))
 
 var_met <- c("sph", "vpd", "pr", "rmin", "rmax", "srad", "tmmn", "tmmx", "vs", "th", "pdsi", "pet", "etr",
              "erc", "bi", "fm100", "fm1000")
