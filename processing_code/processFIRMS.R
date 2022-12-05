@@ -3,32 +3,19 @@ rm(list = ls())
 
 library(terra)
 library(tidyverse)
-# library(data.table)
 library(sf) 
-# library(parallel)
-# library(R.utils)
-# library(lwgeom)
-# library(RCurl)
 library(raster)
 library(tigris)
 
 CA_bound = subset(states(cb = TRUE, resolution = "500k", year = 2020), STATEFP == "06")
 CA_bound = st_transform(CA_bound, crs = 4326)
 
-Dir = "wildfire_mitigation/raw_data/"
-outDir = "wildfire_mitigation/processed_data/"
-#Dir = "~Dropbox"
-# poi <- st_as_sf((lat_lon_ca2),
-#                 coords = c("LONGITUDE", "LATITUDE"),
-#                 crs = 4326)
-# poi_inter <- st_intersects(CA_bound, poi)
-# poi_sf <- poi[poi_inter[[1]],]
-# poi_sf <- st_buffer(poi_sf, dist = 1000 / 2)
+Dir = "../data/raw_data/"
+outDir = "../data/processed_data/"
+
 Fire_ca_rough <- st_read(dsn = paste0(Dir, "FIRMS_MODIS_CA_to2022/fire_archive_M-C61_262030.shp")) %>% 
   st_set_crs(4326) 
-# %>%
-#   subset(LONGITUDE >= -124.5 & LONGITUDE <= -114 & LATITUDE >= 32, LATITUDE <= 42.1)
-# Fire_ca_rough_points <- Fire_ca_rough$geometry
+
 Fire_poi <- st_intersects(st_as_sf(CA_bound$geometry), st_as_sf(Fire_ca_rough$geometry))
 Fire_ca <- Fire_ca_rough[Fire_poi[[1]], ]
 
@@ -76,4 +63,4 @@ FIRMS_ca_grouped <- st_as_sf(FIRMS_ca_grouped,
                              crs = 4326,
                              remove = FALSE)
 
-saveRDS(FIRMS_ca_grouped, file = paste0(outDir, "FIRMS.RDS"))
+saveRDS(FIRMS_ca_grouped, file = paste0(outDir, "FIRMS_gridded.RDS"))
