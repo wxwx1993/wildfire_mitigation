@@ -1,16 +1,18 @@
 # Shaping wildfire policy towards ecological resilience
 
+<img src="https://img.shields.io/badge/Study%20Status-Results%20Available-yellow.svg" alt="Study Status: Results Available"> 
+
 This is the data repository for publicly available code and data to conduct analyses in the paper titled "Shaping wildfire policy towards ecological resilience: The reduction of fire risks post-wildfire."
 
 Analyzing the causal impacts of wildfire mitigation strategies in California.
 
 <b>Code: </b><br>
 
-1. process downloaded spatial data from different sources into a tabular.
+1. [`processing_code`](https://github.com/wxwx1993/wildfire_mitigation/tree/main/processing_code) process downloaded spatial data from different sources into a tabular.
 
-2. apply covariate balance appraoche to obtain control weights to create "synthetic controls".
+2. [`balancing`](https://github.com/wxwx1993/wildfire_mitigation/tree/main/balancing) apply covariate balance appraoche to obtain control weights to create "synthetic controls".
 
-3. outcome analysis on covariate balanced data to generate results and graphs.
+3. [`analysis`](https://github.com/wxwx1993/wildfire_mitigation/tree/main/analysis) outcome analysis on covariate balanced data to generate results and graphs.
 
 <b>Additional Data Source: </b><br>
 
