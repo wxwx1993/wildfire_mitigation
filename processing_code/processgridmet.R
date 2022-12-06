@@ -1,7 +1,7 @@
 library(terra)
 library(tidyverse)
 library(data.table)
-library(sf) 
+library(sf)
 library(parallel)
 library(R.utils)
 library(lwgeom)
@@ -19,6 +19,11 @@ resultDir = "..data/outputs/"
 #CA_bound = subset(states(cb = TRUE, resolution = "500k", year = 2020), STATEFP == "06")
 #CA_bound = st_transform(CA_bound, crs = 4326)
 #firms <- readRDS(paste0(outDir, "FIRMS.RDS"))
+#TODO:  1) Don't use tigris to get california census gridm, get it from census.cov
+#https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.2020.html#list-tab-BG8ZITUQ783GX73G14
+# The file URL is:
+# "https://www2.census.gov/geo/tiger/GENZ2020/shp/cb_2020_us_state_500k.zip"
+# (Say "Retrieved date XXX")
 gpw_grid_ca <- readRDS(paste0(Dir, "gpw_grid_ca.RDS"))
 
 var_met <- c("sph", "vpd", "pr", "rmin", "rmax", "srad", "tmmn", "tmmx", "vs", "th", "pdsi", "pet", "etr",
@@ -40,7 +45,7 @@ gridmet_n_list <- mclapply(1:12, function(months, par) {
                       coords = c("LONGITUDE", "LATITUDE"),
                       crs = 4326,
                       remove = FALSE)
-  layer_met_gridded = st_drop_geometry(st_join(gpw_grid_ca, layer_met, join=st_nearest_feature, suffix=c("", "_ignore"))[-c(3:4)]) 
+  layer_met_gridded = st_drop_geometry(st_join(gpw_grid_ca, layer_met, join=st_nearest_feature, suffix=c("", "_ignore"))[-c(3:4)])
   return(layer_met_gridded[, 3])
  }, par = par, mc.cores = 12)
 gridmet_n_df <- data.frame(do.call(cbind, gridmet_n_list))
