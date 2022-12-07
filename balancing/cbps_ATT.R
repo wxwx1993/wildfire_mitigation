@@ -25,13 +25,14 @@ cbps_att = function(X, W, intercept = TRUE, theta.init = NULL, method = "BFGS", 
     stop("X should be a numeric matrix with nrows = length(W).")
   }
 
+  .Xtheta = NULL
   # ATT balance constraint is:
   # 1/n1 \sum_{Wi = 0} e(x)/(1-e(x)) Xi = 1/n1 \sum_{Wi=1} Xi,
   # which gives loss function
   # (1 - W)exp(theta * X) - W * theta * X
   .objective = function(theta, X, W0.idx, W1.idx, lambda) {
     .Xtheta <<- X %*% theta
-    sum(exp(.Xtheta[W0.idx, ])) - sum(.Xtheta[W1.idx, ]) + sum(lambda * theta^2)
+    (sum(exp(.Xtheta[W0.idx, ])) - sum(.Xtheta[W1.idx, ])) / length(W1.idx) + sum(lambda * theta^2)
   }
 
   .objective.gradient = function(theta, X0, Xsum1, W0.idx, n, lambda) {
@@ -71,7 +72,6 @@ cbps_att = function(X, W, intercept = TRUE, theta.init = NULL, method = "BFGS", 
     control = control,
     hessian = FALSE
   )
-  rm(.Xtheta, envir = parent.env(environment()))
 
   theta.hat = res$par
   weights.0 = exp(X %*% theta.hat)[,]
@@ -105,36 +105,14 @@ cbps_att = function(X, W, intercept = TRUE, theta.init = NULL, method = "BFGS", 
 
 
 if (FALSE) {
-  # Test with toy data
-  set.seed(42)
-
-  n = 5500
-  p = 100
-  X = matrix(rnorm(n*p), n, p) * 10 + 10
-  # X = matrix(rnorm(n*p), n, p)
-  W = rbinom(n, 1, 1 / (1 + exp(20 - X[, 1]))) # zero overlap will be problematic
-  # W = rbinom(n, 1, 1 / (1 + exp(2.5 - X[, 1])))
-  # W = rbinom(n, 1, 1 / (1 + exp(5 - X[, 1])))
-  # W = rbinom(n, 1, 0.5)
-  # W = rbinom(n, 1, 0.05)
-  mean(W)
+  n = 15000
+  p = 40
+  X = matrix(rnorm(n*p), n, p)
+  W = rbinom(n, 1, 1 / (1 + exp(2.5 - X[, 1])))
 
   system.time(res <- cbps_att(X, W))
-  system.time(res <- cbps_att(X, W, intercept = FALSE))
 
-  res$theta.hat
-  m = glm(W ~ X, family = binomial())
-  hist(predict(m, type = "response"))
-  summary(predict(m, type = "response"))
-  summary(m$coefficients)
-
-  res$convergence
   head(res$balance.condition)
-  sum(res$balance.condition[,1] - res$balance.condition[,2])
-  res$weights.0
-  summary(res$weights.0[W==0])
-  hist(res$weights.0[W==0])
-  hist(res$weights.0)
-
-  hist(res$theta.hat)
+  plot(res$balance.std)
+  abline(h = 0)
 }
