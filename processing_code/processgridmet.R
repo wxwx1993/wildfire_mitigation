@@ -19,11 +19,11 @@ resultDir = "..data/outputs/"
 #CA_bound = subset(states(cb = TRUE, resolution = "500k", year = 2020), STATEFP == "06")
 #CA_bound = st_transform(CA_bound, crs = 4326)
 #firms <- readRDS(paste0(outDir, "FIRMS.RDS"))
-#TODO:  1) Don't use tigris to get california census gridm, get it from census.cov
-#https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.2020.html#list-tab-BG8ZITUQ783GX73G14
-# The file URL is:
-# "https://www2.census.gov/geo/tiger/GENZ2020/shp/cb_2020_us_state_500k.zip"
-# (Say "Retrieved date XXX")
+# CA Bound without tigris:
+obj = st_read(file.path(Dir, "cb_2020_us_state_500k", "cb_2020_us_state_500k.shp"))
+CA_bound = subset(obj, NAME == "California")
+CA_bound = st_transform(CA_bound, crs = 4326)
+
 gpw_grid_ca <- readRDS(paste0(Dir, "gpw_grid_ca.RDS"))
 
 var_met <- c("sph", "vpd", "pr", "rmin", "rmax", "srad", "tmmn", "tmmx", "vs", "th", "pdsi", "pet", "etr",
