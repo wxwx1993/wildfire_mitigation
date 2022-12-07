@@ -1,22 +1,23 @@
-# Covariate Balancing Propensity Score (cbps) with regularity: cbps_att_regu
-# This simple script uses Base R's `optim` to solve a variant of (7.10) targeting ATT weights.
-# from Chapter 7 in Stefan Wager's lecture notes: http://web.stanford.edu/~swager/stats361.pdf
+# Covariate Balancing Propensity Score
+# This simple script uses Base R's `optim` to solve a variant of (7.10) from
+# http://web.stanford.edu/~swager/stats361.pdf to target ATT weights.
+# (see https://arxiv.org/abs/1601.05890 for details)
 #
 # Input:
 #   X: nXp numeric covariate matrix
 #   W: binary treatment assignment vector
 #   intercept: whether to include an intercept in logistic model, default is TRUE.
 #   theta.init: optional starting values for theta.
-#   method: method argument for `optim`.
-#   control control argument passed to `optim`.
+#   method: method argument passed to `optim`.
+#   control: control argument passed to `optim`.
+#   rhos: optional ridge penalty (remember to scale X's appropriately if used)
 # Output:
 #   theta.hat: estimated thetas
 #   weights.0: IPW weights for control
 #   weights.1: IPW weights for treated
 #   convergence: optim's convergence status. 0=success.
 #   balance condition: the LHS and RHS of the balance condition.
-
-cbps_att_regu <- function(X, W, intercept = TRUE, theta.init = NULL, method = "BFGS", control = list(), rhos) {
+cbps_att_regu = function(X, W, intercept = TRUE, theta.init = NULL, method = "BFGS", control = list(), rhos = rep(0, ncol(X))) {
   if (!all(W %in% c(0, 1))) {
     stop("W should be a binary vector.")
   }
@@ -28,12 +29,12 @@ cbps_att_regu <- function(X, W, intercept = TRUE, theta.init = NULL, method = "B
   # 1/n1 \sum_{Wi = 0} e(x)/(1-e(x)) Xi = 1/n1 \sum_{Wi=1} Xi,
   # which gives loss function
   # (1 - W)exp(theta * X) - W * theta * X
-  .objective = function(theta, X, W0.idx, W1.idx) {
+  .objective = function(theta, X, W0.idx, W1.idx, rhos) {
     .Xtheta <<- X %*% theta
     sum(exp(.Xtheta[W0.idx, ])) - sum(.Xtheta[W1.idx, ]) + sum(rhos * theta^2)
   }
 
-  .objective.gradient = function(theta, X0, Xsum1, W0.idx, n) {
+  .objective.gradient = function(theta, X0, Xsum1, W0.idx, n, rhos) {
     (colSums(X0 * exp(.Xtheta[W0.idx, ])) - Xsum1) / n + 2 * rhos * theta
   }
 
@@ -61,8 +62,8 @@ cbps_att_regu <- function(X, W, intercept = TRUE, theta.init = NULL, method = "B
   Xsum1 = colSums(X[W1.idx, ])
   res = optim(
     par = theta.init,
-    fn = function(x) .objective(x, X, W0.idx, W1.idx),
-    gr = function(x) .objective.gradient(x, X0, Xsum1, W0.idx, nrow(X)),
+    fn = function(x) .objective(x, X, W0.idx, W1.idx, rhos),
+    gr = function(x) .objective.gradient(x, X0, Xsum1, W0.idx, nrow(X), rhos),
     method = method,
     lower = -Inf,
     upper = Inf,
