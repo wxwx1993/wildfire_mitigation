@@ -110,7 +110,7 @@ if (FALSE) {
   X = matrix(rnorm(n*p), n, p)
   W = rbinom(n, 1, 1 / (1 + exp(2.5 - X[, 1])))
 
-  system.time(res <- cbps_att(X, W))
+  system.time(res <- cbps_att(X, W, control = list(trace=10, maxit=5000)))
 
   head(res$balance.condition)
   plot(res$balance.std)
