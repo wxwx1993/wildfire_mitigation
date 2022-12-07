@@ -17,7 +17,7 @@
 #   weights.1: IPW weights for treated
 #   convergence: optim's convergence status. 0=success.
 #   balance condition: the LHS and RHS of the balance condition.
-cbps_att_regu = function(X, W, intercept = TRUE, theta.init = NULL, method = "BFGS", control = list(), rhos = rep(0, ncol(X))) {
+cbps_att = function(X, W, intercept = TRUE, theta.init = NULL, method = "BFGS", control = list(), rhos = rep(0, ncol(X))) {
   if (!all(W %in% c(0, 1))) {
     stop("W should be a binary vector.")
   }
