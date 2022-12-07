@@ -10,14 +10,14 @@
 #   theta.init: optional starting values for theta.
 #   method: method argument passed to `optim`.
 #   control: control argument passed to `optim`.
-#   rhos: optional ridge penalty (remember to scale X's appropriately if used)
+#   lambda: optional ridge penalty (remember to scale X's appropriately if used)
 # Output:
 #   theta.hat: estimated thetas
 #   weights.0: IPW weights for control
 #   weights.1: IPW weights for treated
 #   convergence: optim's convergence status. 0=success.
 #   balance condition: the LHS and RHS of the balance condition.
-cbps_att = function(X, W, intercept = TRUE, theta.init = NULL, method = "BFGS", control = list(), rhos = rep(0, ncol(X))) {
+cbps_att = function(X, W, intercept = TRUE, theta.init = NULL, method = "BFGS", control = list(), lambda = rep(0, ncol(X))) {
   if (!all(W %in% c(0, 1))) {
     stop("W should be a binary vector.")
   }
@@ -29,19 +29,19 @@ cbps_att = function(X, W, intercept = TRUE, theta.init = NULL, method = "BFGS", 
   # 1/n1 \sum_{Wi = 0} e(x)/(1-e(x)) Xi = 1/n1 \sum_{Wi=1} Xi,
   # which gives loss function
   # (1 - W)exp(theta * X) - W * theta * X
-  .objective = function(theta, X, W0.idx, W1.idx, rhos) {
+  .objective = function(theta, X, W0.idx, W1.idx, lambda) {
     .Xtheta <<- X %*% theta
-    sum(exp(.Xtheta[W0.idx, ])) - sum(.Xtheta[W1.idx, ]) + sum(rhos * theta^2)
+    sum(exp(.Xtheta[W0.idx, ])) - sum(.Xtheta[W1.idx, ]) + sum(lambda * theta^2)
   }
 
-  .objective.gradient = function(theta, X0, Xsum1, W0.idx, n, rhos) {
-    (colSums(X0 * exp(.Xtheta[W0.idx, ])) - Xsum1) / n + 2 * rhos * theta
+  .objective.gradient = function(theta, X0, Xsum1, W0.idx, n, lambda) {
+    (colSums(X0 * exp(.Xtheta[W0.idx, ])) - Xsum1) / n + 2 * lambda * theta
   }
 
   # X = scale(X, center = TRUE, scale = FALSE)
   if (intercept) {
     X = cbind(1, X)
-    rhos = c(rhos[1], rhos)
+    lambda = c(lambda[1], lambda)
   }
 
   W1.idx = which(W == 1)
@@ -62,8 +62,8 @@ cbps_att = function(X, W, intercept = TRUE, theta.init = NULL, method = "BFGS", 
   Xsum1 = colSums(X[W1.idx, ])
   res = optim(
     par = theta.init,
-    fn = function(x) .objective(x, X, W0.idx, W1.idx, rhos),
-    gr = function(x) .objective.gradient(x, X0, Xsum1, W0.idx, nrow(X), rhos),
+    fn = function(x) .objective(x, X, W0.idx, W1.idx, lambda),
+    gr = function(x) .objective.gradient(x, X0, Xsum1, W0.idx, nrow(X), lambda),
     method = method,
     lower = -Inf,
     upper = Inf,

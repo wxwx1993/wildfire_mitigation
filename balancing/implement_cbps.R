@@ -53,7 +53,7 @@ system.time(res <- cbps_att(as.matrix(X.scl),
                             W,
                             theta.init = rep(0, ncol(X)+1),
                             control = list(trace=10, maxit = 5000),
-                            rhos = rep(10^{n-7}, ncol(X))))
+                            lambda = rep(10^{n-7}, ncol(X))))
   return(res)
 })
 
