@@ -17,7 +17,7 @@
 #   weights.1: IPW weights for treated
 #   convergence: optim's convergence status. 0=success.
 #   balance condition: the LHS and RHS of the balance condition.
-cbps_att = function(X, W, intercept = TRUE, theta.init = NULL, method = "BFGS", control = list(), lambda = rep(0, ncol(X))) {
+cbps_att = function(X, W, intercept = TRUE, theta.init = NULL, method = "BFGS", control = list(), lambda = NULL) {
   if (!all(W %in% c(0, 1))) {
     stop("W should be a binary vector.")
   }
@@ -37,11 +37,12 @@ cbps_att = function(X, W, intercept = TRUE, theta.init = NULL, method = "BFGS", 
   .objective.gradient = function(theta, X0, Xsum1, W0.idx, n, lambda) {
     (colSums(X0 * exp(.Xtheta[W0.idx, ])) - Xsum1) / n + 2 * lambda * theta
   }
-
-  # X = scale(X, center = TRUE, scale = FALSE)
+  if (is.null(lambda)) {
+    lambda = rep(0, ncol(X))
+  }
   if (intercept) {
     X = cbind(1, X)
-    lambda = c(lambda[1], lambda)
+    lambda = c(0, lambda)
   }
 
   W1.idx = which(W == 1)
