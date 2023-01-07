@@ -11,8 +11,7 @@ library("mltools")
 library("data.table")
 
 
-#source("/cbps/cbps_ATT.R")
-outDir = "~/zfs/projects/faculty/swager-wildfire/wuxiao/wildfire"
+outDir = "wildfire_mitigation/processed_data"
 
 #year up to
 treated.year = 2008
