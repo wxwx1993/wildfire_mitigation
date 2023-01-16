@@ -11,7 +11,7 @@ library("mltools")
 library("data.table")
 
 
-outDir = "wildfire_mitigation/processed_data"
+outDir = "..data/processed_data"
 
 #year up to
 treated.year = 2008

@@ -9,11 +9,11 @@ library(Hmisc)
 library(sp)
 library("raster")
 
-outDir <- "wildfire_mitigation/processed_data"
-resDir  <- "wildfire_mitigation/outputs"
+outDir <- "..data/intermediate_res"
+resDir  <- "..data/outputs"
 
 #year up to 
-parameters <- expand.grid(c(2008:2020), c("forests", "savannas"))
+parameters <- expand.grid(c(2008:2020), c("forests", "savannas", "grasslands"))
 covariates <- c("minat_", "maxat_", "prcp_", "swe_", "wvp_", "fire_", "avg_BRIGHTNESS_", "max_FRP_")
 # year_area = 1                          
 for (year_area in 1:nrow(parameters)) {
@@ -22,7 +22,7 @@ for (year_area in 1:nrow(parameters)) {
   area = as.character(parameters[year_area, 2])
   df = readRDS(file.path(outDir, "analysis_low", paste0("analysis_treated", treated.year, "_", area, ".RDS")))
   
-  weights = readRDS(list.files(file.path(outDir, "res_low"),
+  weights = readRDS(list.files(file.path(outDir, "weights"),
                                pattern = paste0(treated.year, "_", area),
                                full.names = TRUE))
   df_weight <- df
@@ -116,14 +116,14 @@ for (year_area in 1:nrow(parameters)) {
 }
 
 ## maps
-parameters <- expand.grid(c(2008:2020), c("forests", "savannas"))
+parameters <- expand.grid(c(2008:2020), c("forests", "savannas", "grasslands"))
 for (year_area in 1:nrow(parameters)) {
   #year_area <- 1
   treated.year = as.numeric(parameters[year_area, 1])
   area = as.character(parameters[year_area, 2])
 
   df = readRDS(file.path(outDir, "analysis_low", paste0("analysis_treated", treated.year, "_", area, ".RDS")))
-  weights = readRDS(list.files(file.path(outDir, "res_low"),
+  weights = readRDS(list.files(file.path(outDir, "weights"),
                                pattern = paste0(treated.year, "_", area),
                                full.names = TRUE))
   df_weight <- df

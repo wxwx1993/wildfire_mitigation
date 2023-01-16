@@ -4,7 +4,7 @@ source("cbps_ATT.R")
 Dir = "../data/processed_data"
 outDir = "../data/intermediate_res"
 
-parameters =  expand.grid(c(2008:2020), c("forests", "savannas"))
+parameters =  expand.grid(c(2008:2020), c("forests", "savannas", "grasslands"))
 
 for (year_area in 1:nrow(parameters)) {
   treated.year = as.numeric(parameters[year_area, 1])
