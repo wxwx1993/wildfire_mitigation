@@ -7,8 +7,8 @@ rm(list = ls())
 outDir <- "..data/intermediate_res"
 resDir = "..data/outputs"
 
-biome = "forests"
-outcome = "fire_all"
+# biome = "forests"
+# outcome = "fire_all"
 
 res <- list()
 k = 1  
