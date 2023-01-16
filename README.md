@@ -8,7 +8,7 @@ Analyzing the causal impacts of wildfire mitigation strategies in California.
 
 <b>Code: </b><br>
 
-1. [`processing_code`](https://github.com/wxwx1993/wildfire_mitigation/tree/main/processing_code) process downloaded spatial data from different sources into a tabular.
+1. [`data_processing`](https://github.com/wxwx1993/wildfire_mitigation/tree/main/processing_code) process downloaded spatial data from different sources into a tabular.
 
 2. [`balancing`](https://github.com/wxwx1993/wildfire_mitigation/tree/main/balancing) apply covariate balance appraoche to obtain control weights to create "synthetic controls".
 
