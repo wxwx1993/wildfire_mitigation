@@ -8,8 +8,8 @@ library(raster)
 
 #Dir = "wildfire_mitigation/raw_data/"
 #outDir = "wildfire_mitigation/processed_data/"
-Dir = "..data/raw_data"
-outDir = "..data/processed_data"
+Dir = "../data/raw_data"
+outDir = "../data/processed_data"
 
 # CA Bound without tigris:
 #https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.2020.html#list-tab-BG8ZITUQ783GX73G14

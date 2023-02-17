@@ -10,15 +10,15 @@ library(grid)
 library(pBrackets) 
 library(gridExtra)
 
-outDir <- "..data/processed_data"
-inDir <- "..data/intermediate_res"
+outDir <- "../data/processed_data"
+inDir <- "../data/intermediate_res"
 
 # By lagged
 parameters <- expand.grid(c("savannas", "forests", "grasslands"), c(1:9))
 for (year_area in 1:nrow(parameters)) {
   area <- as.character(parameters[year_area, 1])
   lagged <- as.numeric(parameters[year_area, 2])
-  #year_area = 1
+
   rate <- lapply(c(2008:2020), function(treated.year) {
     
     # access both covariates data and weights set
@@ -91,7 +91,7 @@ for (year_area in 1:nrow(parameters)) {
                 hifire95.frac = sum.hifire95/sum(df_weight$treated),
                 hifire90.frac = sum.hifire90/sum(df_weight$treated))
     
-    saveRDS(df.freq.year, file = file.path(inDir, "weights", paste0("df.freq.year", treated.year, "_", area, ".RDS")))
+    saveRDS(df.freq.year, file = file.path(inDir, "weights", "frequency", paste0("df.freq.year", treated.year, "_", area, ".RDS")))
   
       ratio.fire.1 <- subset(df.freq.year, treated == 1 & year == treated.year + lagged)$fire.frac
       ratio.fire.0 <- subset(df.freq.year, treated == 0 & year == treated.year + lagged)$fire.frac
@@ -110,7 +110,7 @@ for (year_area in 1:nrow(parameters)) {
 }
 
 # save as CSV file for better disbute
-parameters = expand.grid(c("savannas"), as.character(seq(1,9,1)))
+parameters = expand.grid(c("forests", "savannas", "grasslands"), as.character(seq(1,9,1)))
 for (index in 1:nrow(parameters)) {
   rate <- data.frame(readRDS(file.path(inDir, "result_low", 
                                        paste0(parameters[index,1], "_t", parameters[index,2], ".RDS"))))

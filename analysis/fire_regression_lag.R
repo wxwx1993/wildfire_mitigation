@@ -1,11 +1,13 @@
 library(grid) 
 library(pBrackets) 
 library(gridExtra)
+library(Hmisc)
+library(ggplot2)
 
 rm(list = ls())
 
-outDir <- "..data/intermediate_res"
-resDir = "..data/outputs"
+outDir <- "../data/intermediate_res"
+resDir = "../data/outputs"
 
 # biome = "forests"
 # outcome = "fire_all"

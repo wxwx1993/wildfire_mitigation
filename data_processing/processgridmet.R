@@ -12,9 +12,9 @@ library("fst")
 library(ncdf4) # package for netcdf manipulation
 library(velox)
 
-Dir = "..data/raw_data/"
-outDir = "..data/processed_data/"
-resultDir = "..data/outputs/"
+Dir = "../data/raw_data/"
+outDir = "../data/processed_data/"
+resultDir = "../data/outputs/"
 
 #CA_bound = subset(states(cb = TRUE, resolution = "500k", year = 2020), STATEFP == "06")
 #CA_bound = st_transform(CA_bound, crs = 4326)

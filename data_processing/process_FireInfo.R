@@ -3,7 +3,7 @@ library(fst)
 library("sf")
 library("tidyverse")
 
-outDir <- "..data/processed_data"
+outDir <- "../data/processed_data"
 
 fire.df <- readRDS(file.path(outDir, "FIRMS.RDS"))
 
