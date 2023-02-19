@@ -28,9 +28,9 @@ All data needed to evaluate the conclusions in the paper are present in the pape
 
 All the analyses are run on Yen Servers with R programming at the Stanford Graduate School of Business. Computational Support was provided by the Data, Analytics, and Research Computing (DARC) group at the Stanford Graduate School of Business (RRID:SCR_022938).
 
-R version 4.2.1 (2022-06-23) -- "Funny-Looking Kid"
-Copyright (C) 2022 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R version 4.2.1 (2022-06-23) -- "Funny-Looking Kid"  
+Copyright (C) 2022 The R Foundation for Statistical Computing  
+Platform: x86_64-pc-linux-gnu (64-bit)  
 
 <b>Terms of Use:</b><br>
 Authors/funders retain copyright (where applicable) of code on this Github repo and the article. Anyone who wishes to share, reuse, remix, or adapt this material must obtain permission from the corresponding author. By using the contents on this Github repo and the article, you agree to cite our paper.
