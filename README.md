@@ -10,11 +10,17 @@ Analyzing the causal impacts of wildfire mitigation strategies in California.
 
 1. [`data_processing`](https://github.com/wxwx1993/wildfire_mitigation/tree/main/data_processing) process downloaded spatial data from different sources into a tabular.
 
-2. [`balancing`](https://github.com/wxwx1993/wildfire_mitigation/tree/main/balancing) apply covariate balance appraoche to obtain control weights to create "synthetic controls".
+2. [`balancing`](https://github.com/wxwx1993/wildfire_mitigation/tree/main/balancing) apply covariate balancing synthetic control appraoche to obtain control weights to create "synthetic controls".
 
 3. [`analysis`](https://github.com/wxwx1993/wildfire_mitigation/tree/main/analysis) conduct outcome analysis on covariate balanced data to generate results and graphs.
 
-<b>Additional Data Source: </b><br>
+<b> Data Source: </b><br>
+
+| Data    |  Sources      |  Spatial resolution  | Time resolution | Time periods
+| ----------  | -------------------- |-----------------|
+| Active Fires   | [![MODIS FIRMS ](https://firms.modaps.eosdis.nasa.gov/download/) |  1 km2        | daily | 11/01/2000 - |
+| Meteorological | [![Daymet ](https://daymet.ornl.gov/) |  1 km2        | daily | 01/01/2000 - |
+| Land Cover   | [![MCD12Q1 v006 ](https://lpdaac.usgs.gov/products/mcd12q1v006) |  500 m2        | yearly | 2001 - |
 
 
 <b>Data: </b><br>
