@@ -11,6 +11,8 @@ resDir = "../data/outputs"
 
 biome = "savannas"
 outcome = "fire_all"
+lag = 1
+start_year = 2010
 
 res <- list()
 k = 1  
@@ -18,7 +20,7 @@ for (outcome in c("fire_all", "fire_90", "fire_95")) {
   #  results.list <- list()
   for (biome in c("forests", "savannas")) {
     data.raw = Reduce(rbind, lapply(1:9, function(ll) {
-      XX = read.csv(file.path(outDir, "result_low",
+      XX = read.csv(file.path(outDir, "result_low", start_year,
                               paste0(biome, "_lag", ll, ".csv")))
       XX$lag = ll
       XX
@@ -34,11 +36,11 @@ for (outcome in c("fire_all", "fire_90", "fire_95")) {
     data.reg$fire_90 = c(data.raw$hifire90.0, data.raw$hifire90.1) * data.raw$pixels_burn
     data.reg$fire_95 = c(data.raw$hifire95.0, data.raw$hifire95.1) * data.raw$pixels_burn
     
-    all.end.years = 2009:2021
+    all.end.years = (start_year+1):2021
     all.lags = 1:9
     
     jackfun = function(end.years) {
-      regform = paste0(outcome, " ~ factor(end.year) * factor(lag) + treat + treat:poly(lag, 1)")
+      regform = paste0(outcome, " ~ factor(end.year) * factor(lag) + treat + treat:poly(lag, ", lag, ")")
       reg.jack = glm(formula(regform),
                       family = quasipoisson,
                       data = subset(data.reg, end.year %in% end.years))
@@ -78,7 +80,7 @@ for (outcome in c("fire_all", "fire_90", "fire_95")) {
       geom_line(aes(x= year, y= upper, color = land_type), linetype="dashed" , lwd=1.2) +
       geom_hline(yintercept=1) +
       scale_x_continuous(breaks=c(0, 2, 4, 6, 8, 10)) +
-      coord_cartesian(ylim = c(0.25, 1.25)) + 
+      coord_cartesian(ylim = c(0.25, 1.4)) + 
       #geom_text(x = Sim2$logOR[1], y = 1.5*max(Sim2$upper)- 0.5*min(Sim2$lower), label="a", size = 16, color = "black") + 
       #scale_color_manual(values=c("red", "blue")) +
       theme_bw() +
@@ -101,7 +103,7 @@ res_combined <- grid.arrange(res[[1]], res[[2]], res[[3]],
                              res[[4]], res[[5]], res[[6]],
                              nrow = 3)
 
-ggsave(file.path(resDir, "results", paste0("res_combined.jpeg")), 
+ggsave(file.path(resDir, "results", paste0("res_combined_lag", lag, "_", start_year, ".jpeg")), 
        res_combined, 
        width = 11 / 1.6*2,
        height = 8.5 / 1.6*3,

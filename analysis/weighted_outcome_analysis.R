@@ -13,13 +13,15 @@ library(gridExtra)
 outDir <- "../data/processed_data"
 inDir <- "../data/intermediate_res"
 
+for (start_year in 2005:2006) {
+#start_year = 2007
 # By lagged
-parameters <- expand.grid(c("savannas", "forests", "grasslands"), c(1:9))
+parameters <- expand.grid(c("savannas", "forests"), c(1:9))
 for (year_area in 1:nrow(parameters)) {
   area <- as.character(parameters[year_area, 1])
   lagged <- as.numeric(parameters[year_area, 2])
 
-  rate <- lapply(c(2008:2020), function(treated.year) {
+  rate <- lapply(c(start_year:2020), function(treated.year) {
     
     # access both covariates data and weights set
     df <- readRDS(file.path(outDir, "analysis_low", paste0("analysis_treated", treated.year, "_", area, ".RDS")))
@@ -91,7 +93,7 @@ for (year_area in 1:nrow(parameters)) {
                 hifire95.frac = sum.hifire95/sum(df_weight$treated),
                 hifire90.frac = sum.hifire90/sum(df_weight$treated))
     
-    saveRDS(df.freq.year, file = file.path(inDir, "weights", "frequency", paste0("df.freq.year", treated.year, "_", area, ".RDS")))
+    #saveRDS(df.freq.year, file = file.path(inDir, "weights", "frequency", paste0("df.freq.year", treated.year, "_", area, ".RDS")))
   
       ratio.fire.1 <- subset(df.freq.year, treated == 1 & year == treated.year + lagged)$fire.frac
       ratio.fire.0 <- subset(df.freq.year, treated == 0 & year == treated.year + lagged)$fire.frac
@@ -106,22 +108,24 @@ for (year_area in 1:nrow(parameters)) {
   })
   rate.df <- do.call(rbind, rate)
   colnames(rate.df) <- c("fire.1", "fire.0", "hifire95.1", "hifire95.0", "hifire90.1", "hifire90.0")
-  saveRDS(rate.df, file = file.path(inDir, "result_low", paste0(area , "_t", lagged, ".RDS")))
+  saveRDS(rate.df, file = file.path(inDir, "result_low", start_year, paste0(area , "_t", lagged, ".RDS")))
 }
 
 # save as CSV file for better disbute
-parameters = expand.grid(c("forests", "savannas", "grasslands"), as.character(seq(1,9,1)))
+parameters = expand.grid(c("forests", "savannas"), as.character(seq(1,9,1)))
 for (index in 1:nrow(parameters)) {
-  rate <- data.frame(readRDS(file.path(inDir, "result_low", 
+  rate <- data.frame(readRDS(file.path(inDir, "result_low", start_year,
                                        paste0(parameters[index,1], "_t", parameters[index,2], ".RDS"))))
-  rownames(rate) <- 2008:(2008 + nrow(rate) -1)
+  rownames(rate) <- start_year:(start_year + nrow(rate) -1)
   
-  rate$pixels_burn <- sapply(2008:(2008 + nrow(rate) -1), function(treated.year) {
+  rate$pixels_burn <- sapply(start_year:(start_year + nrow(rate) -1), function(treated.year) {
     df <- readRDS(file.path(outDir, "analysis_low", 
                             paste0("analysis_treated", treated.year, "_", parameters[index,1], ".RDS")))
     return(sum(df$treated))
   })
 
-  write.csv(rate, file = file.path(inDir, "result_low",
+  write.csv(rate, file = file.path(inDir, "result_low", start_year,
                                    paste0(parameters[index,1], "_lag", parameters[index,2], ".csv")))
+}
+
 }
