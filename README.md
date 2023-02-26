@@ -37,7 +37,7 @@ Authors/funders retain copyright (where applicable) of code on this Github repo 
 
 
 <b>Contact Us: </b><br>
-* Email: xw2892@cumc.columbia.edu or swager@stanford.edu
+* Email: xw2892@cumc.columbia.edu, erikcs@stanford.edu, and swager@stanford.edu
 
 <b>Acknowledgments</b><br>
 
