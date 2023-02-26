@@ -2,7 +2,7 @@
 
 <img src="https://img.shields.io/badge/Study%20Status-Results%20Available-yellow.svg" alt="Study Status: Results Available"> 
 
-This is the data repository for publicly available code and data to conduct analyses in the paper titled "Shaping wildfire policy towards ecological resilience: The reduction of fire risks post-wildfire."
+This is the data repository for publicly available code and data to conduct analyses in the paper titled "The salience impact of fire trajectory on future catastrophic wildfires using satellite-based counterfactual analyses."
 
 Analyzing the causal impacts of wildfire mitigation strategies in California.
 
@@ -37,9 +37,9 @@ Authors/funders retain copyright (where applicable) of code on this Github repo 
 
 
 <b>Contact Us: </b><br>
-* Email:
+* Email: xw2892@cumc.columbia.edu or swager@stanford.edu
 
 <b>Acknowledgments</b><br>
 
-We appreciate the work of for preparing and processing the data set used for anaylsis. 
+We appreciate the work of Henry Zhu and Sitong Pan for preparing and processing the data set used for anaylsis. 
 
