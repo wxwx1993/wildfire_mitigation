@@ -33,8 +33,7 @@ Copyright (C) 2022 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)  
 
 <b>Terms of Use:</b><br>
-Authors/funders retain copyright (where applicable) of code on this Github repo and the article. Anyone who wishes to share, reuse, remix, or adapt this material must obtain permission from the corresponding author. By using the contents on this Github repo and the article, you agree to cite our paper.
-
+Authors/funders retain copyright (where applicable) of code on this Github repo and the article. Anyone who wishes to share, reuse, remix, or adapt this material must obtain permission from the corresponding author.
 
 <b>Contact Us: </b><br>
 * Email: xw2892@cumc.columbia.edu, erikcs@stanford.edu, and swager@stanford.edu
