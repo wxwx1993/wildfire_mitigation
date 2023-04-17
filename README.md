@@ -1,8 +1,8 @@
-# How long does managed fire protect against catastrophic wildfires?
+# Low-intensity fires mitigate the risk of catastrophic wildfires in California's forests and savannas
 
 <img src="https://img.shields.io/badge/Study%20Status-Results%20Available-yellow.svg" alt="Study Status: Results Available"> 
 
-This is the data repository for publicly available code and data to conduct analyses in the paper titled "The salience impact of fire trajectory on future catastrophic wildfires using satellite-based counterfactual analyses."
+This is the data repository for publicly available code and data to conduct analyses in the paper titled "Low-intensity fires mitigate the risk of catastrophic wildfires in California's forests and savannas."
 
 Analyzing the causal impacts of wildfire mitigation strategies in California.
 
