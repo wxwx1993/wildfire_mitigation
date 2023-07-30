@@ -23,7 +23,6 @@ Analyzing the causal impacts of wildfire mitigation strategies in California.
 | ----------  | -------------------- |-----------------|-----------------|-----------------|
 | Active Fires   | [`MODIS FIRMS`](https://firms.modaps.eosdis.nasa.gov/download/) |  1 km2        | daily | 11/01/2000 - |
 | Meteorological | [`Daymet`](https://daymet.ornl.gov/) |  1 km2        | daily | 01/01/2000 - |
-| Land Cover   | [`MCD12Q1 v006`](https://lpdaac.usgs.gov/products/mcd12q1v006) |  500 m2        | yearly | 2001 - |
 | Disturbance Agents | [`Dataverse`](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/CVTNLY) | 30 m2  | yearly | 2000 - |
 | Fractional Vegetation Cover | [`Dataverse`](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/KMBYYM) | 30 m2 | yearly | 2000 - |
 | Vegetation Class | [`CAL FIRE`](https://map.dfg.ca.gov/metadata/ds1327.html) | 30 m2 | one time | 1990 - 2014 |
