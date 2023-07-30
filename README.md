@@ -26,7 +26,7 @@ Analyzing the causal impacts of wildfire mitigation strategies in California.
 | Land Cover   | [`MCD12Q1 v006`](https://lpdaac.usgs.gov/products/mcd12q1v006) |  500 m2        | yearly | 2001 - |
 | Disturbance Agents | [`Dataverse`](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/CVTNLY) | 30 m2  | yearly | 2000 - |
 | Fractional Vegetation Cover | [`Dataverse`](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/KMBYYM) | 30 m2 | yearly | 2000 - |
-| Vegetation Class | [`CAL FIRE`](https://map.dfg.ca.gov/metadata/ds1327.html}{CAL FIRE) | 30 m2 | one time | 1990 - 2014 |
+| Vegetation Class | [`CAL FIRE`](https://map.dfg.ca.gov/metadata/ds1327.html) | 30 m2 | one time | 1990 - 2014 |
 | Topography | [`GMTED`](https://www.earthenv.org/topography) | 1 km2 | one time | 2010 |
 | Fire Severity | [`MTBS`](https://www.mtbs.gov/project-overview) | 30 m2  | yearly | 2000 - |
 | Fire Severity | [`RAVG`](https://burnseverity.cr.usgs.gov/products/ravg) | 30 m2  | yearly | 2012 - \\
