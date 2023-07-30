@@ -1,8 +1,8 @@
-# Low-intensity fires mitigate the risk of catastrophic wildfires in California's forests and savannas
+# Low-intensity fires mitigate the risk of catastrophic wildfires in California's forests
 
 <img src="https://img.shields.io/badge/Study%20Status-Results%20Available-yellow.svg" alt="Study Status: Results Available"> 
 
-This is the data repository for publicly available code and data to conduct analyses in the paper titled "Low-intensity fires mitigate the risk of catastrophic wildfires in California's forests and savannas."
+This is the data repository for publicly available code and data to conduct analyses in the paper titled "Low-intensity fires mitigate the risk of catastrophic wildfires in California's forests."
 
 Analyzing the causal impacts of wildfire mitigation strategies in California.
 
