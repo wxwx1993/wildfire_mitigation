@@ -29,7 +29,7 @@ Analyzing the causal impacts of wildfire mitigation strategies in California.
 | Vegetation Class | [`CAL FIRE`](https://map.dfg.ca.gov/metadata/ds1327.html) | 30 m2 | one time | 1990 - 2014 |
 | Topography | [`GMTED`](https://www.earthenv.org/topography) | 1 km2 | one time | 2010 |
 | Fire Severity | [`MTBS`](https://www.mtbs.gov/project-overview) | 30 m2  | yearly | 2000 - |
-| Fire Severity | [`RAVG`](https://burnseverity.cr.usgs.gov/products/ravg) | 30 m2  | yearly | 2012 - \\
+| Fire Severity | [`RAVG`](https://burnseverity.cr.usgs.gov/products/ravg) | 30 m2  | yearly | 2012 - |
 | Prescribed fires | [`Federal FACTS`](https://www.sciencedirect.com/science/article/pii/S0301479721021459) | unspecified | yearly | 2000 -  |
 | Prescribed fires | [`CAL FIRE`](https://map.dfg.ca.gov/metadata/ds0397.html) | unspecified | yearly | 2000 - |
 
