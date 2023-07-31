@@ -13,7 +13,7 @@ library("raster")
 outDir = "../data/processed_data/"
 resultDir = "../data/outputs/"
 
-# Figure 1 covariate balance check
+# Figure 3 covariate balance check
 
 parameters <- expand.grid(c(2008:2020), c("conifer", "hardwood"))
 covariates <- c("minat_", "maxat_", "prcp_", "swe_", "wvp_", "fire_", "avg_BRIGHTNESS_", "max_FRP_", 
@@ -90,9 +90,9 @@ for (year_area in 1:nrow(parameters)) {
          units = "in")
 }
 
-## Figure 1 California maps for exposed and control regions
+## Figure 3 California maps for exposed and control regions
 
-parameters <- expand.grid(c(2008:2020), c("forestland", "conifer","hardwood"))
+parameters <- expand.grid(c(2008:2020), c("conifer", "hardwood"))
 for (year_area in 1:nrow(parameters)) {
   #year_area <- 1
   treated.year = as.numeric(parameters[year_area, 1])
@@ -129,6 +129,7 @@ for (year_area in 1:nrow(parameters)) {
 }
 
 # Table 1 for fire frequency
+
 FIRMS_ca_grouped = readRDS(file.path(outDir, "FIRMS.RDS"))
 FIRMS_ca_grouped$unit = paste0(FIRMS_ca_grouped$LATITUDE, FIRMS_ca_grouped$LONGITUDE)
 st_geometry(FIRMS_ca_grouped) <- NULL
@@ -173,7 +174,7 @@ write.csv(df, "fire_freq.csv", row.names = F)
 
 ### Table for covariate balance of indivudal covariates
 
-parameters <- expand.grid(c(2008:2020), c("forestland", "conifer","hardwood", "shrub", "woodland"))
+parameters <- expand.grid(c(2008:2020), c("conifer", "hardwood"))
 balance_summary.df <- data.frame(area = rep(NA, nrow(parameters)),
                                  year = rep(NA, nrow(parameters)),
                                  pre = rep(NA, nrow(parameters)),
@@ -219,87 +220,8 @@ balance_summary.df$post[year_area] = paste0(sum(bal[,1] > 0.1, na.rm = T), " (",
 }
 write.csv(balance_summary.df, "balance_summary_frp.csv")
 
-
-# Boxplot for the outcomes
-
-for (biom in c("conifer", "hardwood") ) {
-bbiom.list <- lapply(1:9, function(lag) {
-  bbiom_sub <- readRDS(file.path(outDir, paste0("rev_result_low/", biom, "_t", lag, ".RDS")))
-results <- tibble(
-  Lag = lag,  
-  Types = rep(c("Exposed", "Synthetic Control"), each = nrow(bbiom_sub)),  
-  allFire = c(bbiom_sub[, 1], bbiom_sub[, 2]),
-  midFire = c(bbiom_sub[, 5], bbiom_sub[, 6]),
-  highFire = c(bbiom_sub[, 3], bbiom_sub[, 4]))
-return(results)
-})
-bbiom <- do.call("rbind", bbiom.list)
-
-bbiom_plot <- ggplot(bbiom, aes(x = Types, y = allFire, fill = allFire)) +
-  geom_boxplot() +
-  coord_cartesian(ylim = c(0, ifelse(biom == "conifer", 0.1, 0.075))) +
-  facet_wrap(~Lag, ncol = 3) + 
-  labs(x = "All Fires", y = "Fire Frequency", fill = "Types") +
-  ggtitle(paste0(capitalize(biom))) + 
-  theme_bw() +
-  theme(plot.margin = unit(c(0.1, 1, 0.1, 0.1), "lines"),
-        plot.title = element_text(hjust = 0.5, size = 36),
-        legend.title = element_blank(),
-        axis.title = element_text(size = 36),  
-        axis.text = element_text(size = 28),  
-        strip.text = element_text(size = 36)) +
-  theme(legend.position = "none")
-
-ggsave(file.path(resDir, "results", paste0(biom ,"_rev_all.jpeg")), 
-       bbiom_plot, 
-       width = 11 / 1.6*3,
-       height = 8.5 / 1.6*3,
-       units = "in")
-
-bbiom_plot <- ggplot(bbiom, aes(x = Types, y = highFire, fill = highFire)) +
-  geom_boxplot() +
-  coord_cartesian(ylim = c(0, ifelse(biom == "conifer", c(0.0075), c(0.005)))) +
-  facet_wrap(~Lag, ncol = 3) +  
-  labs(x = "Class 3-5 Fires", y = "Fire Frequency", fill = "Types") +
-  ggtitle(paste0(capitalize(biom))) + 
-  theme_bw() +
-  theme(plot.margin = unit(c(0.1, 1, 0.1, 0.1), "lines"),
-        plot.title = element_text(hjust = 0.5, size = 36),
-        legend.title = element_blank(),
-        axis.title = element_text(size = 36),  
-        axis.text = element_text(size = 28), 
-        strip.text = element_text(size = 36)) +
-  theme(legend.position = "none")
-
-ggsave(file.path(resDir, "results", paste0(biom ,"_rev_high.jpeg")), 
-       bbiom_plot, 
-       width = 11 / 1.6*3,
-       height = 8.5 / 1.6*3,
-       units = "in")
-
-bbiom_plot <- ggplot(bbiom, aes(x = Types, y = midFire, fill = midFire)) +
-  geom_boxplot() +
-  coord_cartesian(ylim = c(0, ifelse(biom == "conifer", c(0.012), c(0.008)))) +
-  facet_wrap(~Lag, ncol = 3) +  # Adjust ncol as per your preference
-  labs(x = "Class 2-5 Fires", y = "Fire Frequency", fill = "Types") +
-  ggtitle(paste0(capitalize(biom))) + 
-  theme_bw() +
-  theme(plot.margin = unit(c(0.1, 1, 0.1, 0.1), "lines"),
-        plot.title = element_text(hjust = 0.5, size = 36),
-        legend.title = element_blank(),
-        axis.title = element_text(size = 36),  
-        axis.text = element_text(size = 28), 
-        strip.text = element_text(size = 36)) +
-  theme(legend.position = "none")
-
-ggsave(file.path(resDir, "results", paste0(biom ,"_rev_moderate.jpeg")), 
-       bbiom_plot, 
-       width = 11 / 1.6*3,
-       height = 8.5 / 1.6*3,
-       units = "in")
-}
-
 ## Figure for E-values
+
 res <- list()
 k = 1  
 for (outcome in c("fire_all", "fire_90", "fire_95")) {

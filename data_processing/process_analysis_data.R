@@ -12,7 +12,7 @@ library("fst")
 outDir = "../data/processed_data/"
 
 #year up to 2020
-parameters <- expand.grid(c(2005:2020), c("woodland", "conifer"))
+parameters <- expand.grid(c(2005:2020), c("conifer", "hardwood"))
 # year_area = 1                          
 for (year_area in 1:nrow(parameters)) {
   treated.year <- as.numeric(parameters[year_area, 1])
@@ -27,21 +27,12 @@ for (year_area in 1:nrow(parameters)) {
   fveg_elev_grid_ca_poly <- readRDS(file.path(outDir, "fveg_elev_grid_ca_poly.RDS"))
 
   st_geometry(fveg_elev_grid_ca_poly) <- NULL
-  if (area == "forestland") {
-    fveg_elev_grid_ca_poly <- fveg_elev_grid_ca_poly %>%
-      filter(fveg %in% c(31, 51))
-  } else if (area == "woodland") {
-    fveg_elev_grid_ca_poly <- fveg_elev_grid_ca_poly %>%
-      filter(fveg %in% c(32, 52))
-  } else if (area == "conifer") {
+  if (area == "conifer") {
     fveg_elev_grid_ca_poly <- fveg_elev_grid_ca_poly %>%
       filter(fveg %in% c(31, 32))
   } else if (area == "hardwood") {
     fveg_elev_grid_ca_poly <- fveg_elev_grid_ca_poly %>%
       filter(fveg %in% c(51, 52))
-  } else if (area == "shrub") {
-    fveg_elev_grid_ca_poly <- fveg_elev_grid_ca_poly %>%
-      filter(fveg %in% c(70))
   }
   fveg_elev_grid_ca_poly$fveg <- as.factor(fveg_elev_grid_ca_poly$fveg)
   fveg_elev_grid_ca_poly <- cbind(fveg_elev_grid_ca_poly[,c("LONGITUDE", "LATITUDE", "elev")], one_hot(as.data.table(fveg_elev_grid_ca_poly$fveg)))
