@@ -1,4 +1,5 @@
-# create weighted synthetic controls using covariate balance weights.
+# create synthetic control regions using covariate balance weights
+# calculate the relative risks of fire frequencies between exposed region and synthetic control region
 
 print(Sys.time())
 rm(list = ls())
@@ -27,7 +28,7 @@ for (year_area in 1:nrow(parameters)) {
                               pattern = paste0(treated.year, "_", area),
                               full.names = TRUE))
     
-    # outcome analysis, weights by covariate balancing weights to create synthetic controls
+    # outcome analysis, weights by covariate balancing weights to create the synthetic control region
     df_weight <- df
     df_weight$weight <- df_weight$treated *res$weights.1 + (1-df_weight$treated)*res$weights.0
     
@@ -48,8 +49,6 @@ for (year_area in 1:nrow(parameters)) {
     # Create a date range panel
     start.year = min(FIRMS_ca_grouped$year)
     end.year = max(FIRMS_ca_grouped$year)
-    #start.month = min(subset(FIRMS_ca_grouped, year == start.year)$month)
-    #end.month = max(subset(FIRMS_ca_grouped, year == end.year)$month)
     
     start.date = as.Date(paste0(start.year, "-01-01"))
     end.date = as.Date(paste0(end.year, "-12-01"))
@@ -62,6 +61,9 @@ for (year_area in 1:nrow(parameters)) {
     df.panel = cbind(df.date.panel[ix.date, ], unit  = unique(FIRMS_ca_grouped$unit)[ix.unit])
     
     # define outcomes as high intensity fire with high max FRP
+    # has.fire denotes all detected fires as outcomes
+    # has.hifire95 denotes high-intensity fires as outcomes
+    # has.hifire90 denotes both moderate- and high-intensity fires as outcomes
     FIRMS_ca_grouped$has.fire <- 1
     FIRMS_ca_grouped$has.hifire95 <- 0
     FIRMS_ca_grouped$has.hifire90 <- 0
@@ -91,8 +93,9 @@ for (year_area in 1:nrow(parameters)) {
                 hifire95.frac = sum.hifire95/sum(df_weight$treated),
                 hifire90.frac = sum.hifire90/sum(df_weight$treated))
     
-    #saveRDS(df.freq.year, file = file.path(outDir, "rev_result_low", start_year, paste0("df.freq.year", treated.year, "_", area, ".RDS")))
+    saveRDS(df.freq.year, file = file.path(outDir, "rev_result_low", start_year, paste0("df.freq.year", treated.year, "_", area, ".RDS")))
   
+    # calculate the relative risks of fire frequencies between exposed region and synthetic control region
       ratio.fire.1 <- subset(df.freq.year, treated == 1 & year == treated.year + lagged)$fire.frac
       ratio.fire.0 <- subset(df.freq.year, treated == 0 & year == treated.year + lagged)$fire.frac
       ratio.hifire95.1 <- subset(df.freq.year, treated == 1 & year == treated.year + lagged)$hifire95.frac
@@ -109,7 +112,7 @@ for (year_area in 1:nrow(parameters)) {
   saveRDS(rate.df, file = file.path(outDir, "rev_result_low",start_year, paste0(area , "_t", lagged, ".RDS")))
 }
 
-# save as CSV file for better disbute
+# save as CSV file for easier data distrubute
 parameters = expand.grid(c("conifer", "hardwood"), as.character(seq(1,9,1)))
 for (index in 1:nrow(parameters)) {
   rate <- data.frame(readRDS(file.path(outDir, "rev_result_low", start_year, 

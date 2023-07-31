@@ -12,7 +12,7 @@ resultDir = "../data/outputs/"
 #outcome = "fire_all"
 
 ## MAIN ANALYSIS
-######### Generating main results Figure 2 in main analysis
+######### Generating main results Figure 2 of the main text
 res <- list()
 k = 1  
 for (outcome in c("fire_all", "fire_90", "fire_95")) {
