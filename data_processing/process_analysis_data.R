@@ -1,6 +1,7 @@
-## Process data for the covariate balance analysis
-## combine active fire, pre treatment historical fire, climate, land cover data into single df
-## the df is per exposure year (2008-2020) per land type (forests, savannas, grasslands)
+## process data for the covariate balance synthetic control analysis
+## combine active fire, historic trajectories on fire behaviors, topography, meteorological,
+## disturbance, and vegetation data into single df
+## the df is per exposure year (2008-2020) per land type ("conifer", "hardwood")
 print(Sys.time())
 rm(list = ls())
 library("sf")
@@ -24,6 +25,7 @@ for (year_area in 1:nrow(parameters)) {
   col.idx4 <- c(1, 2, seq(3, (2 + (treated.year - 2000) * 5), 1))
   col.idx5 <- c(1, 2, seq(3, (2 + (treated.year - 2000)), 1))
   
+  # Import vegetation class and topography of each locations
   fveg_elev_grid_ca_poly <- readRDS(file.path(outDir, "fveg_elev_grid_ca_poly.RDS"))
 
   st_geometry(fveg_elev_grid_ca_poly) <- NULL
@@ -116,7 +118,7 @@ for (year_area in 1:nrow(parameters)) {
   
   saveRDS(fire.df_year, file = paste0(outDir, "/rev_analysis_low/fire_class/fire.df", treated.year, "_", area, ".RDS"))
   
-  # df for the covariate balance analysis, only keep low intensity fire class 1
+  # df for the covariate balance analysis, only keep low intensity fire class 1 as the exposure
   fire.df$has.hifire <- 0
   fire.df[fire.df$max_FRP >= 100,]$has.hifire <- 1
   df <- subset(df, !(unit %in% subset(fire.df, has.hifire == 1)$unit))

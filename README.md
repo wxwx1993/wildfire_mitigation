@@ -4,7 +4,7 @@
 
 This is the data repository for publicly available code and data to conduct analyses in the paper titled "Low-intensity fires mitigate the risk of catastrophic wildfires in California's forests."
 
-Analyzing the causal impacts of wildfire mitigation strategies in California.
+We use a synthetic control approach to analyze twenty years of satellite-based fire activity data across 124,186 km2 of forests in California, and provide evidence that low-intensity fires substantially reduce the risk of future high-intensity fires.
 
 <b>Code: </b><br>
 
@@ -12,7 +12,7 @@ Analyzing the causal impacts of wildfire mitigation strategies in California.
 
 2. [`balancing`](https://github.com/wxwx1993/wildfire_mitigation/tree/main/balancing) apply covariate balancing synthetic control approach to obtain control weights to create the synthetic control region.
 
-3. [`analysis`](https://github.com/wxwx1993/wildfire_mitigation/tree/main/analysis) conduct outcome analysis on covariate balanced data to generate results and graphs.
+3. [`analysis`](https://github.com/wxwx1993/wildfire_mitigation/tree/main/analysis) conduct outcome analysis on covariate balanced data to generate main results and result graphs.
 
 4. [`figures`](https://github.com/wxwx1993/wildfire_mitigation/tree/main/analysis) generate figures and tables in the main text and supplementary materials.
 
@@ -49,5 +49,5 @@ Authors/funders retain copyright (where applicable) of code on this Github repo 
 
 <b>Acknowledgments</b><br>
 
-We appreciate the work of Henry Zhu and Sitong Pan for preparing and processing the data set used for anaylsis. 
-
+We thank Sitong Pan and Henry Zhu for data collection and processing. We are also grateful to Clarke Knight for sharing data with us, including refined USFS and CAL
+519 FIRE’s forest management datasets.

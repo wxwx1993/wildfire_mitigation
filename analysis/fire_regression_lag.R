@@ -1,3 +1,6 @@
+# generate individual and combined results from mutiple synthetic control analysis
+# also generate main result figures
+
 library(grid) 
 library(pBrackets) 
 library(gridExtra)
@@ -13,7 +16,7 @@ resultDir = "../data/outputs/"
 
 ## MAIN ANALYSIS
 
-######### Generating main results Figure 2 of the paper
+## Generating main results Figure 2 of the paper
 res <- list()
 k = 1  
 for (outcome in c("fire_all", "fire_90", "fire_95")) {
@@ -39,8 +42,7 @@ data.reg$fire_95 = c(data.raw$hifire95.0, data.raw$hifire95.1) * data.raw$pixels
 all.end.years = 2009:2021
 all.lags = 1:9
 
-#### raw, individual synthetic control analyses
-
+## raw, individual synthetic control analyses (point RR estimates)
 raw.plot = expand.grid(Year=all.end.years, Lag=all.lags)
 raw.plot$ratio.estimte = NA
 raw.plot$Baseline = NA
@@ -55,8 +57,7 @@ for(iter in 1:nrow(raw.plot)) {
 }
 raw.plot$Year = factor(raw.plot$Year)
 
-#### synthesized analysis via log-linear modeling
-
+## synthesized analysis via log-linear modeling
 jackfun = function(end.years) {
   jack.data = subset(raw.plot, Year %in% end.years)
   reg.jack = glm(ratio.estimte ~ Lag,
@@ -72,8 +73,7 @@ if (outcome == "fire_all") {fire_type <- "all fires"} else
   if (outcome == "fire_90") {fire_type <- "class 2-5 fires"} else 
     if (outcome == "fire_95") {fire_type <- "class 3-5 fires"} 
 
-# generate Figure S2 of the supp
-
+## generate Figure S2 of the supp
 cmp.plot = ggplot(raw.plot, aes(Lag, ratio.estimte)) +
   geom_point(aes(colour = Year, size = Baseline)) +
   scale_colour_manual(name = "Outcome year",
@@ -175,8 +175,7 @@ for (outcome in c("fire_all", "fire_90", "fire_95")) {
     all.end.years = 2009:2021
     all.lags = 1:9
     
-    #### raw, individual synthetic control analyses
-    
+    #### raw, individual synthetic control analyses    
     raw.plot = expand.grid(Year=all.end.years, Lag=all.lags)
     raw.plot$ratio.estimte = NA
     raw.plot$Baseline = NA
@@ -191,8 +190,7 @@ for (outcome in c("fire_all", "fire_90", "fire_95")) {
     }
     raw.plot$Year = factor(raw.plot$Year)
     
-    #### synthesized analysis via log-linear modeling
-    
+    #### synthesized analysis via log-linear modeling   
     jackfun = function(end.years) {
       jack.data = subset(raw.plot, Year %in% end.years)
       reg.jack = glm(ratio.estimte ~ Lag,
@@ -208,8 +206,7 @@ for (outcome in c("fire_all", "fire_90", "fire_95")) {
       if (outcome == "fire_90") {fire_type <- "class 2-5 fires"} else 
         if (outcome == "fire_95") {fire_type <- "class 3-5 fires"} 
     
-    ### CI for synthesized analysis
-    
+    ### CI for synthesized analysis  
     jackreps = t(sapply(1:length(all.end.years), function(ii) { jackfun(all.end.years[-ii]) }))
     colnames(jackreps) = all.lags
     
@@ -280,8 +277,7 @@ for (outcome in c("fire_all", "fire_90", "fire_95")) {
     all.end.years = 2009:2021
     all.lags = 1:9
     
-    #### raw, individual synthetic control analyses
-    
+    #### raw, individual synthetic control analyses   
     raw.plot = expand.grid(Year=all.end.years, Lag=all.lags)
     raw.plot$ratio.estimte = NA
     raw.plot$Baseline = NA
@@ -296,8 +292,7 @@ for (outcome in c("fire_all", "fire_90", "fire_95")) {
     }
     raw.plot$Year = factor(raw.plot$Year)
     
-    #### synthesized analysis via log-linear modeling
-    
+    #### synthesized analysis via log-linear modeling   
     jackfun = function(end.years) {
       jack.data = subset(raw.plot, Year %in% end.years)
       reg.jack = glm(ratio.estimte ~ Lag,
@@ -309,8 +304,7 @@ for (outcome in c("fire_all", "fire_90", "fire_95")) {
     
     full.reg = jackfun(all.end.years)
     
-    ### CI for synthesized analysis
-    
+    ### CI for synthesized analysis    
     jackreps = t(sapply(1:length(all.end.years), function(ii) { jackfun(all.end.years[-ii]) }))
     colnames(jackreps) = all.lags
     
@@ -384,8 +378,7 @@ for (outcome in c("fire_all", "fire_90", "fire_95")) {
     all.end.years = 2009:2021
     all.lags = 1:9
     
-    #### raw, individual synthetic control analyses
-    
+    #### raw, individual synthetic control analyses  
     raw.plot = expand.grid(Year=all.end.years, Lag=all.lags)
     raw.plot$ratio.estimte = NA
     raw.plot$Baseline = NA
@@ -400,8 +393,7 @@ for (outcome in c("fire_all", "fire_90", "fire_95")) {
     }
     raw.plot$Year = factor(raw.plot$Year)
     
-    #### synthesized analysis via log-linear modeling
-    
+    #### synthesized analysis via log-linear modeling  
     jackfun = function(end.years) {
       jack.data = subset(raw.plot, Year %in% end.years)
       reg.jack = glm(ratio.estimte ~ Lag,
@@ -413,8 +405,7 @@ for (outcome in c("fire_all", "fire_90", "fire_95")) {
     
     full.reg = jackfun(all.end.years)
     
-    ### CI for synthesized analysis
-    
+    ### CI for synthesized analysis   
     jackreps = t(sapply(1:length(all.end.years), function(ii) { jackfun(all.end.years[-ii]) }))
     colnames(jackreps) = all.lags
     
@@ -490,8 +481,7 @@ for (outcome in c("fire_all", "fire_90", "fire_95")) {
     all.end.years = (years + 1):2021
     all.lags = 1:9
     
-    #### raw, individual synthetic control analyses
-    
+    #### raw, individual synthetic control analyses   
     raw.plot = expand.grid(Year=all.end.years, Lag=all.lags)
     raw.plot$ratio.estimte = NA
     raw.plot$Baseline = NA
@@ -506,8 +496,7 @@ for (outcome in c("fire_all", "fire_90", "fire_95")) {
     }
     raw.plot$Year = factor(raw.plot$Year)
     
-    #### synthesized analysis via log-linear modeling
-    
+    #### synthesized analysis via log-linear modeling   
     jackfun = function(end.years) {
       jack.data = subset(raw.plot, Year %in% end.years)
       reg.jack = glm(ratio.estimte ~ Lag,
@@ -519,8 +508,7 @@ for (outcome in c("fire_all", "fire_90", "fire_95")) {
     
     full.reg = jackfun(all.end.years)
     
-    ### CI for synthesized analysis
-    
+    ### CI for synthesized analysis  
     jackreps = t(sapply(1:length(all.end.years), function(ii) { jackfun(all.end.years[-ii]) }))
     colnames(jackreps) = all.lags
     
@@ -596,8 +584,7 @@ for (outcome in c("fire_all", "fire_90", "fire_95")) {
     all.end.years = 2009:2021
     all.lags = 1:9
     
-    #### raw, individual synthetic control analyses
-    
+    #### raw, individual synthetic control analyses   
     raw.plot = expand.grid(Year=all.end.years, Lag=all.lags)
     raw.plot$ratio.estimte = NA
     raw.plot$Baseline = NA
@@ -612,8 +599,7 @@ for (outcome in c("fire_all", "fire_90", "fire_95")) {
     }
     raw.plot$Year = factor(raw.plot$Year)
     
-    #### synthesized analysis via log-linear modeling
-    
+    #### synthesized analysis via log-linear modeling   
     jackfun = function(end.years) {
       jack.data = subset(raw.plot, Year %in% end.years)
       reg.jack = glm(ratio.estimte ~ Lag,
@@ -626,7 +612,6 @@ for (outcome in c("fire_all", "fire_90", "fire_95")) {
     full.reg = jackfun(all.end.years)
     
     ### CI for synthesized analysis
-    
     jackreps = t(sapply(1:length(all.end.years), function(ii) { jackfun(all.end.years[-ii]) }))
     colnames(jackreps) = all.lags
     
@@ -704,8 +689,7 @@ for (outcome in c("fire_all", "fire_90", "fire_95")) {
     all.end.years = 2009:2021
     all.lags = 1:9
     
-    #### raw, individual synthetic control analyses
-    
+    #### raw, individual synthetic control analyses   
     raw.plot = expand.grid(Year=all.end.years, Lag=all.lags)
     raw.plot$ratio.estimte = NA
     raw.plot$Baseline = NA
@@ -720,8 +704,7 @@ for (outcome in c("fire_all", "fire_90", "fire_95")) {
     }
     raw.plot$Year = factor(raw.plot$Year)
     
-    #### synthesized analysis via log-linear modeling
-    
+    #### synthesized analysis via log-linear modeling  
     jackfun = function(end.years) {
       jack.data = subset(raw.plot, Year %in% end.years)
       reg.jack = glm(ratio.estimte ~ Lag,
@@ -733,8 +716,7 @@ for (outcome in c("fire_all", "fire_90", "fire_95")) {
     
     full.reg = jackfun(all.end.years)
     
-    ### CI for synthesized analysis
-    
+    ### CI for synthesized analysis  
     jackreps = t(sapply(1:length(all.end.years), function(ii) { jackfun(all.end.years[-ii]) }))
     colnames(jackreps) = all.lags
     

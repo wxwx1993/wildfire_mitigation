@@ -1,6 +1,6 @@
-# create synthetic control regions using covariate balance weights
-# calculate the relative risks of fire frequencies between exposed region and synthetic control region
-
+## create synthetic control regions using covariate balance weights
+## calculate the relative risks of fire frequencies between exposed region and synthetic control region
+## by land types and year lags
 print(Sys.time())
 rm(list = ls())
 library("sf")
@@ -14,7 +14,7 @@ library(gridExtra)
 outDir = "../data/processed_data/"
 
 for (start_year in c(2006, 2008, 2010)) {
-# By lagged
+## By lagged
 parameters <- expand.grid(c("conifer", "hardwood"), c(1:9))
 for (year_area in 1:nrow(parameters)) {
   area <- as.character(parameters[year_area, 1])
@@ -112,7 +112,7 @@ for (year_area in 1:nrow(parameters)) {
   saveRDS(rate.df, file = file.path(outDir, "rev_result_low",start_year, paste0(area , "_t", lagged, ".RDS")))
 }
 
-# save as CSV file for easier data distrubute
+## save as CSV file for easier data sharing
 parameters = expand.grid(c("conifer", "hardwood"), as.character(seq(1,9,1)))
 for (index in 1:nrow(parameters)) {
   rate <- data.frame(readRDS(file.path(outDir, "rev_result_low", start_year, 
