@@ -36,7 +36,7 @@ for (year_area in 1:nrow(parameters)) {
                                      theta.init = rep(0, ncol(X)+1),
                                      #method = "Nelder-Mead",
                                      control = list(trace=10, maxit = 5000),
-                                     rhos = rep(10^{n-7}, ncol(X))))
+                                     lambda = rep(10^{n-7}, ncol(X))))
     return(res)
     })
   converge_set = (sapply(res_regu.list, function(res) res$convergence))
