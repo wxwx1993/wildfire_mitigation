@@ -2,7 +2,7 @@
 ## calculate ATT weights for each units (the weights corresponding to each focal year and land type)
 library("sf")
 
-source("cbps_ATT_regu.R")
+source("cbps_ATT.R")
 
 outDir = "../data/processed_data/"
 
@@ -31,12 +31,11 @@ for (year_area in 1:nrow(parameters)) {
 
 
   res_regu.list <- lapply(1:8, function(n) {
-    system.time(res <- cbps_att_regu(as.matrix(X.scl),
-                                     W,
-                                     theta.init = rep(0, ncol(X)+1),
-                                     #method = "Nelder-Mead",
-                                     control = list(trace=10, maxit = 5000),
-                                     lambda = rep(10^{n-7}, ncol(X))))
+    system.time(res <- cbps_att(as.matrix(X.scl),
+                                W,
+                                theta.init = rep(0, ncol(X)+1),
+                                control = list(trace=10, maxit = 5000),
+                                lambda = rep(10^{n-7}, ncol(X))))
     return(res)
     })
   converge_set = (sapply(res_regu.list, function(res) res$convergence))
