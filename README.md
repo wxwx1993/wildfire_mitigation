@@ -1,6 +1,6 @@
 # Low-intensity fires mitigate the risk of catastrophic wildfires in California's forests
 
-<img src="https://img.shields.io/badge/Study%20Status-Results%20Available-yellow.svg" alt="Study Status: Results Available"> 
+<img src="https://img.shields.io/badge/Study%20Status-Publication%20Available-green.svg" alt="Study Status: Publication Available"> 
 
 This is the data repository for publicly available code and data to conduct analyses in the paper titled "Low-intensity fires mitigate the risk of catastrophic wildfires in California's forests."
 
@@ -44,10 +44,13 @@ Platform: x86_64-pc-linux-gnu (64-bit)
 <b>Terms of Use:</b><br>
 Authors/funders retain copyright (where applicable) of code on this Github repo and the article. Anyone who wishes to share, reuse, remix, or adapt this material must obtain permission from the corresponding author.
 
+By using the contents on this Github repo and the article, you agree to cite:
+
+1. Wu, X., Sverdrup, E., Mastrandrea, M.D., Wara, M.W., and Wager, S., 2023. Low-intensity fires mitigate the risk of high-intensity wildfires in California's forests. Science Advances, 9(45), p.eadi4123. DOI: [`10.1126/sciadv.adi4123`](https://www.science.org/doi/10.1126/sciadv.adi4123)
+
 <b>Contact Us: </b><br>
 * Email: xw2892@cumc.columbia.edu, erikcs@stanford.edu, and swager@stanford.edu
 
 <b>Acknowledgments</b><br>
 
-We thank Sitong Pan and Henry Zhu for data collection and processing. We are also grateful to Clarke Knight for sharing data with us, including refined USFS and CAL
-519 FIRE’s forest management datasets.
+We thank Sitong Pan and Henry Zhu for data collection and processing. We are also grateful to Clarke Knight for sharing data with us, including refined USFS and CAL FIRE’s forest management datasets.
