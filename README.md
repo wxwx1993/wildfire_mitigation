@@ -53,4 +53,4 @@ By using the contents on this Github repo and the article, you agree to cite:
 
 <b>Acknowledgments</b><br>
 
-We thank Sitong Pan and Henry Zhu for data collection and processing. We are also grateful to Clarke Knight for sharing data with us, including refined USFS and CAL FIRE’s forest management datasets.
+We thank Sitong Pan and Henry Zhu for data collection and processing; A. Abadie, C. Knight, X. Nie, and researchers from the Pyregence Consortium for helpful discussions. We are also grateful to C. Knight for sharing data with us, including refined USFS and CAL FIRE’s forest management datasets. All the analyses are run on Yen Servers with R programming at the Stanford Graduate School of Business. Computational support was provided by the Data, Analytics, and Research Computing (DARC) group at the Stanford Graduate School of Business (RRID: SCR_022938).
