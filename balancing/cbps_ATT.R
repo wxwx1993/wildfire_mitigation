@@ -1,7 +1,7 @@
 # Covariate Balancing / Calibrated Propensity Score
-# This simple script uses Base R's `optim` to solve a variant of (7.10) from
-# http://web.stanford.edu/~swager/stats361.pdf to target ATT weights.
-# (see https://arxiv.org/abs/1601.05890 and https://arxiv.org/abs/1710.08074 for details)
+# This simple script uses Base R's `optim` to solve the balancing calibration loss described in:
+# Wu et al. (2023): https://doi.org/10.1126/sciadv.adi4123 (appendix).
+# More details are in chapter 7 of http://web.stanford.edu/~swager/stats361.pdf and https://arxiv.org/abs/1601.05890, https://arxiv.org/abs/1710.08074
 #
 # Input:
 #   X: nXp numeric covariate matrix
