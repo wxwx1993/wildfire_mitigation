@@ -1,10 +1,10 @@
 # Covariate Balancing / Calibrated Propensity Score
-# This simple script uses Base R's `optim` to solve the balancing calibration loss described in:
+# This simple script uses Base R's `optim` to solve the balancing calibration loss described in
 # Wu et al. (2023): https://doi.org/10.1126/sciadv.adi4123 (appendix).
 # More details are in chapter 7 of http://web.stanford.edu/~swager/stats361.pdf and https://arxiv.org/abs/1601.05890, https://arxiv.org/abs/1710.08074
 #
 # Input:
-#   X: nXp numeric covariate matrix
+#   X: nXp numeric covariate matrix (this script is intended as a "zero-dependency Base R" solution for balancing with n in the low 100 000s and p in the low 1000s.)
 #   W: binary treatment assignment vector
 #   intercept: whether to include an intercept in logistic model, default is TRUE.
 #   theta.init: optional starting values for theta.
